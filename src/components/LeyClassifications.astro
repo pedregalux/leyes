@@ -1,0 +1,46 @@
+---
+interface Props {
+  ley: {
+    clasificacion1: string;
+    clasificacion2: string;
+    clasificacion3: string;
+    textoClasificacion1?: string;
+    textoClasificacion2?: string;
+    textoClasificacion3?: string;
+  };
+  showText?: boolean;
+}
+
+const { ley, showText = false } = Astro.props;
+
+// Función para obtener el color según el estado
+const getEstadoColor = (estado: string) => {
+  switch (estado) {
+    case 'Alta':
+      return 'danger'; // rojo
+    case 'Moderada':
+      return 'warning'; // amarillo
+    case 'Baja':
+      return 'success'; // verde
+    default:
+      return 'secondary';
+  }
+};
+---
+
+<div class="ley-classifications">
+  <div class="mb-2">
+    <span class={`badge bg-${getEstadoColor(ley.clasificacion1)} me-2`}>Clasificación 1: {ley.clasificacion1}</span>
+    {showText && ley.textoClasificacion1 && <p class="small mt-1">{ley.textoClasificacion1}</p>}
+  </div>
+  
+  <div class="mb-2">
+    <span class={`badge bg-${getEstadoColor(ley.clasificacion2)} me-2`}>Clasificación 2: {ley.clasificacion2}</span>
+    {showText && ley.textoClasificacion2 && <p class="small mt-1">{ley.textoClasificacion2}</p>}
+  </div>
+  
+  <div class="mb-2">
+    <span class={`badge bg-${getEstadoColor(ley.clasificacion3)} me-2`}>Clasificación 3: {ley.clasificacion3}</span>
+    {showText && ley.textoClasificacion3 && <p class="small mt-1">{ley.textoClasificacion3}</p>}
+  </div>
+</div>

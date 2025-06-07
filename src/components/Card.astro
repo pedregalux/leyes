@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import LeyClassifications from './LeyClassifications.astro';
+
+interface Props {
+  ley: CollectionEntry<'leyes'>;
+}
+
+const { ley } = Astro.props;
+---
+
+<div class="card h-100 masonry-item shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">
+      <a href={`/ley/${ley.id}`} class="text-decoration-none">{ley.data.titulo}</a>
+    </h5>
+    <p class="card-text small text-muted">{ley.data.fecha}</p>
+    
+    <div class="categories mb-3">
+      {ley.data.categorias.map((categoria: string) => (
+        <a href={`/?categoria=${categoria}`} class="badge bg-secondary text-decoration-none me-1">{categoria}</a>
+      ))}
+    </div>
+    
+    <div class="mb-3">
+      <LeyClassifications ley={ley.data} />
+    </div>
+    
+    <a href={`/ley/${ley.id}`} class="btn btn-sm btn-outline-primary">Ver detalles</a>
+  </div>
+</div>

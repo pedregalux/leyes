@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { type LeyesCollection, getCollection } from 'astro:content';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const leyes = await getCollection('proyectos');
+	return leyes.map((ley) => ({
+		params: { titulo: ley.id },
+		props: ley,
+	}));
+}
+type Props = LeyesCollection<'proyectos'>;
+
+const ley = Astro.props;
+const { Content } = await render(ley);
+---
+
+<Layout {...ley.data}>
+	<Content />
+</Layout>
